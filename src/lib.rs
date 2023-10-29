@@ -3,6 +3,10 @@ use std::time::SystemTime;
 
 pub struct DateTimeUtils {}
 
+pub trait HasId {
+    fn id(&self) -> Option<u32>;
+}
+
 pub trait ToDateTimeString {
     fn to_datetime_string(self) -> String;
 }
