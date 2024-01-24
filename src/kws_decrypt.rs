@@ -5,7 +5,7 @@ use rusoto_kms::{DecryptRequest, Kms, KmsClient};
 use std::{env, str::FromStr};
 
 pub async fn decrypt_data_with_kms(
-    encrypted_data_key: String,
+    encrypted_data_key: &str,
     encrypted_data: String,
 ) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     let region_name = env::var("AWS_REGION").unwrap_or_else(|_| String::from("eu-central-1"));
