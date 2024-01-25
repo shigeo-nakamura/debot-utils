@@ -7,6 +7,7 @@ use std::{env, str::FromStr};
 pub async fn decrypt_data_with_kms(
     encrypted_data_key: &str,
     encrypted_data: String,
+    output_as_hex: bool,
 ) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     let region_name = env::var("AWS_REGION").unwrap_or_else(|_| String::from("eu-central-1"));
     let region = Region::from_str(&region_name)?;
@@ -36,5 +37,9 @@ pub async fn decrypt_data_with_kms(
         &encrypted_data[16..],
     )?;
 
-    Ok(decrypted_data)
+    if output_as_hex {
+        Ok(hex::encode(decrypted_data).into())
+    } else {
+        Ok(String::from_utf8(decrypted_data)?.into())
+    }
 }
