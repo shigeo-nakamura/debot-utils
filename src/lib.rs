@@ -6,9 +6,11 @@ pub use datetime_utils::DateTimeUtils;
 pub use datetime_utils::ToDateTimeString;
 pub use kws_decrypt::decrypt_data_with_kms;
 pub use math::*;
+use serde::Serializer;
 use std::num::ParseFloatError;
 use std::str::FromStr;
 
+use rust_decimal::prelude::ToPrimitive;
 use rust_decimal::Decimal;
 use rust_decimal::Error as DecimalParseError;
 
@@ -36,6 +38,16 @@ pub fn parse_to_decimal(input: &str) -> Result<Decimal, ParseDecimalError> {
 
 pub fn parse_to_f64(input: &str) -> Result<f64, ParseFloatError> {
     input.parse::<f64>()
+}
+
+pub fn serialize_decimal_as_f64<S>(decimal: &Decimal, serializer: S) -> Result<S::Ok, S::Error>
+where
+    S: Serializer,
+{
+    let f64_value = decimal.to_f64().ok_or(serde::ser::Error::custom(
+        "Decimal to f64 conversion failed",
+    ))?;
+    serializer.serialize_f64(f64_value)
 }
 
 pub trait HasId {
