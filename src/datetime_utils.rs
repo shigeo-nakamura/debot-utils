@@ -1,4 +1,4 @@
-use chrono::{DateTime, Datelike, FixedOffset, NaiveDateTime, Utc};
+use chrono::{DateTime, Datelike, FixedOffset, Utc};
 use std::{env, time::SystemTime};
 
 pub struct DateTimeUtils {}
@@ -9,8 +9,8 @@ pub trait ToDateTimeString {
 
 impl ToDateTimeString for i64 {
     fn to_datetime_string(self) -> String {
-        let naive_datetime = NaiveDateTime::from_timestamp_opt(self, 0).expect("Invalid timestamp");
-        naive_datetime.format("%Y-%m-%d %H:%M:%S").to_string()
+        let datetime = DateTime::<Utc>::from_timestamp(self, 0).expect("Invalid timestamp");
+        datetime.format("%Y-%m-%d %H:%M:%S").to_string()
     }
 }
 
@@ -24,16 +24,14 @@ impl ToDateTimeString for SystemTime {
 impl DateTimeUtils {
     pub fn get_current_datetime_string() -> String {
         let current_time = Utc::now().timestamp();
-        let naive_datetime =
-            NaiveDateTime::from_timestamp_opt(current_time, 0).expect("Invalid timestamp");
-        naive_datetime.format("%Y-%m-%d %H:%M:%S").to_string()
+        let datetime = DateTime::<Utc>::from_timestamp(current_time, 0).expect("Invalid timestamp");
+        datetime.format("%Y-%m-%d %H:%M:%S").to_string()
     }
 
     pub fn get_current_date_string() -> String {
         let current_time = Utc::now().timestamp();
-        let naive_datetime =
-            NaiveDateTime::from_timestamp_opt(current_time, 0).expect("Invalid timestamp");
-        naive_datetime.format("%Y-%m-%d").to_string()
+        let datetime = DateTime::<Utc>::from_timestamp(current_time, 0).expect("Invalid timestamp");
+        datetime.format("%Y-%m-%d").to_string()
     }
 }
 
