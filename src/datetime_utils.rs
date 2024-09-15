@@ -1,4 +1,4 @@
-use chrono::{DateTime, FixedOffset, NaiveDateTime, Utc};
+use chrono::{DateTime, Datelike, FixedOffset, NaiveDateTime, Utc};
 use std::{env, time::SystemTime};
 
 pub struct DateTimeUtils {}
@@ -51,4 +51,9 @@ pub fn get_local_time() -> (i64, String) {
         local_now.timestamp(),
         local_now.format("%Y-%m-%dT%H:%M:%S%z").to_string(),
     )
+}
+
+pub fn is_sunday() -> bool {
+    let current_date = Utc::now();
+    current_date.weekday().num_days_from_sunday() == 0
 }
