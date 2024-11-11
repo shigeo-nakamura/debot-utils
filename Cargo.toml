@@ -1,6 +1,6 @@
 [package]
 name = "debot-utils"
-version = "1.0.27"
+version = "1.0.28"
 authors = ["Shigeo NAKAMURA <nakamura_shigeo@yahoo.com>"]
 edition = "2021"
 description = "Utility functions for dex trading"
