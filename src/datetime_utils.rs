@@ -1,4 +1,4 @@
-use chrono::{DateTime, Datelike, FixedOffset, Utc};
+use chrono::{DateTime, Datelike, FixedOffset, Timelike, Utc, Weekday};
 use std::{env, time::SystemTime};
 
 pub struct DateTimeUtils {}
@@ -54,4 +54,24 @@ pub fn get_local_time() -> (i64, String) {
 pub fn is_sunday() -> bool {
     let current_date = Utc::now();
     current_date.weekday().num_days_from_sunday() == 0
+}
+
+pub fn has_remaining_sunday_hours(threshold: u32) -> bool {
+    if threshold > 24 {
+        panic!("Threshold must be between 0 and 24");
+    }
+
+    let now = Utc::now();
+
+    if now.weekday() != Weekday::Sun {
+        return false;
+    }
+
+    // Calculate the remaining hours in Sunday
+    let remaining_seconds =
+        (23 - now.hour()) * 3600 + (59 - now.minute()) * 60 + (59 - now.second());
+    let remaining_hours = remaining_seconds as f64 / 3600.0;
+
+    // Check if the remaining hours are greater than or equal to the threshold
+    remaining_hours >= threshold as f64
 }
