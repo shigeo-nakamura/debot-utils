@@ -64,7 +64,7 @@ pub fn has_remaining_sunday_hours(threshold: u32) -> bool {
     let now = Utc::now();
 
     if now.weekday() != Weekday::Sun {
-        return false;
+        return true;
     }
 
     // Calculate the remaining hours in Sunday
