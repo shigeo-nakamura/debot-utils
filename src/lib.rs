@@ -2,6 +2,7 @@ pub mod datetime_utils;
 pub mod kws_decrypt;
 pub mod limitied_size_map;
 pub mod math;
+pub mod retry_loop;
 
 pub use datetime_utils::*;
 pub use kws_decrypt::decrypt_data_with_kms;
@@ -9,6 +10,7 @@ pub use limitied_size_map::DynamicLimitedSizeMap;
 pub use limitied_size_map::LimitedSizeMap;
 pub use limitied_size_map::ValuePair;
 pub use math::*;
+pub use retry_loop::*;
 use serde::Serializer;
 use std::num::ParseFloatError;
 use std::str::FromStr;
