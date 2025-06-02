@@ -1,4 +1,4 @@
-use chrono::{DateTime, Datelike, FixedOffset, Timelike, Utc, Weekday};
+use chrono::{DateTime, Datelike, FixedOffset, Local, Timelike, Utc, Weekday};
 use std::{env, time::SystemTime};
 
 pub struct DateTimeUtils {}
@@ -74,4 +74,9 @@ pub fn has_remaining_sunday_hours(threshold: u32) -> bool {
 
     // Check if the remaining hours are greater than or equal to the threshold
     remaining_hours >= threshold as f64
+}
+
+pub fn num_seconds_from_midnight() -> u32 {
+    let now = Local::now().time();
+    now.num_seconds_from_midnight()
 }
